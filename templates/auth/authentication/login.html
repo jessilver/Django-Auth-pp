@@ -1,0 +1,35 @@
+{% extends "auth/auth-card.html" %}
+{% load custom_filters %}
+
+{% block title %} Login {% endblock %}
+{% block card-title %} Login {% endblock %}
+
+{% block card-content %}
+
+<form method="post" action="{% url 'account_login' %}" class="container">
+    {% csrf_token %}
+    <div class="row mb-2">
+        {% with form.login|add_class:"form-control" as login_field %}
+            {{ login_field }}
+        {% endwith %}
+    </div>
+    <div class="row mb-2 position-relative">
+        {% with form.password|add_class:"form-control" as password_field %}
+            {{ password_field }}
+        {% endwith %}
+    </div>
+    <div class="row mb-2">
+        <div class="col">
+            <label for="{{ form.remember.id_for_label }}">Remember Me:</label>
+        </div>
+        <div class="col col-1 p-0">
+            {% with form.remember|add_class:"form-check-input" as remember_field %}
+                {{ remember_field }}
+            {% endwith %}
+        </div>
+    </div>
+    <div class="row">
+        <button type="submit" class="btn btn-primary mx-auto">Login</button>
+    </div>
+</form>
+{% endblock %}

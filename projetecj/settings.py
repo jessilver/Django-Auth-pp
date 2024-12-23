@@ -14,11 +14,31 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+env_vars = [
+    'DEBUG',
+    'SECRET_KEY',
+    'ALLOWED_HOSTS',
+    'DB_ENGINE',
+    'DB_NAME',
+    'DB_USER',
+    'DB_PASSWORD',
+    'DB_HOST',
+    'DB_PORT',
+    'EMAIL_BACKEND',
+    'EMAIL_HOST',
+    'EMAIL_PORT',
+    'EMAIL_USE_TLS',
+    'EMAIL_HOST_USER',
+    'EMAIL_HOST_PASSWORD'
+]
+
+for var in env_vars:
+    os.environ.pop(var, None)
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -29,7 +49,13 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
+def get_allowed_hosts():
+    hosts = os.getenv('ALLOWED_HOSTS')
+    if hosts:
+        return [host.strip() for host in hosts.split(',')]
+    return []
+
+ALLOWED_HOSTS = get_allowed_hosts()
 
 # Application definition
 
@@ -80,7 +106,7 @@ AUTHENTICATION_BACKENDS = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -152,7 +178,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
