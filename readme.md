@@ -59,7 +59,16 @@ Welcome to my Django Auth App project. This project is an Auth App that I can us
 
 ## Usage
 
-[Working - Coming Soon]
+### App
+
+This repository contains the entire project. If you are looking for just the app, check the releases section for `auth-app.zip`.
+
+### Templates
+
+Download the custom templates from the release by searching for `auth-custom-templates.zip`. Unzip the file into your `templates` folder. You can modify these templates to fit your project's needs.
+
+
+[Working in progress - Coming Soon]
 
 ## Contributing
 
